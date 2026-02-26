@@ -23,9 +23,9 @@ pip install -r requirements.txt
 Tạo file .env và thêm Gemini API Key: GOOGLE_API_KEY='Dien key vao day'
 4. Chuẩn bị dữ liệu và khởi chạy
   Bước 1: Nạp luật vào Database (Chỉ cần chạy khi có file mới trong thư mục data/)
-  python ingest.py
+  python load_data_faiss.py (python load_data_chromadb.py) hoặc chạy trực tiếp
   Bước 2: Khởi động giao diện Chatbot
-  streamlit run app.py
+  streamlit run app_faiss.py (streamlit run app_chromadb.py)
 
 ## 📦 Cấu trúc thư mục
 ```text
