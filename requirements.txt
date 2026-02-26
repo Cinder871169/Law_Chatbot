@@ -1,0 +1,12 @@
+streamlit
+python-dotenv
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+pypdf
+docx2txt
+chromadb
+langchain-chroma
+faiss-cpu
+pydantic
