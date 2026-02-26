@@ -33,7 +33,7 @@ if not os.path.exists(DB_CHROMA_PATH):
     st.stop()
 
 # --- KHỞI TẠO MẠNG VÀ TÌM KIẾM ---
-# Kết nối vào DB có sẵn, cực kỳ nhẹ và nhanh
+# Kết nối vào DB có sẵn
 embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 vectorstore = Chroma(persist_directory=DB_CHROMA_PATH, embedding_function=embeddings)
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
