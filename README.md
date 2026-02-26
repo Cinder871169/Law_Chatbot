@@ -1,4 +1,4 @@
-# ⚖️ Trợ lý Pháp lý AI (RAG System)
+# ⚖️ Chatbot hỗ trợ tra cứu luật
 
 Chatbot tra cứu văn bản pháp luật Việt Nam sử dụng công nghệ RAG (Retrieval-Augmented Generation). Hệ thống cho phép nạp các file luật định dạng PDF/Word và trả lời câu hỏi dựa trên nội dung thực tế, đảm bảo tính chính xác và có trích dẫn nguồn.
 
