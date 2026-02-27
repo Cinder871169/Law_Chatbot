@@ -11,4 +11,3 @@ chromadb
 langchain-chroma
 faiss-cpu
 pydantic
-glob
