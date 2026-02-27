@@ -2,8 +2,8 @@ import os
 from dotenv import load_dotenv
 from langchain_community.document_loaders import (
     DirectoryLoader,
-    Docx2txtLoader,
     PyPDFLoader,
+    Docx2txtLoader,
 )
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -13,27 +13,27 @@ load_dotenv()
 
 
 def ingest_data():
-    print("🚀 Đang khởi động quy trình nạp dữ liệu tối ưu...")
+    print("Đang quét dữ liệu từ thư mục 'data'...")
 
-    # 1. Load tài liệu
-    loader_docx = DirectoryLoader("data", glob="**/*.docx", loader_cls=Docx2txtLoader)
+    # 1. Nạp song song cả PDF và DOCX với DirectoryLoader
     loader_pdf = DirectoryLoader("data", glob="**/*.pdf", loader_cls=PyPDFLoader)
-    documents = loader_docx.load() + loader_pdf.load()
+    loader_docx = DirectoryLoader("data", glob="**/*.docx", loader_cls=Docx2txtLoader)
 
-    # 2. Chia nhỏ văn bản (Sử dụng thông số tối ưu từ notebook)
-    # Cắt theo thứ tự: Đoạn văn -> Dòng -> Câu -> Từ để giữ nguyên ý nghĩa pháp lý
+    documents = loader_pdf.load() + loader_docx.load()
+
+    # 2. Chia nhỏ văn bản
+    # Cắt theo thứ tự: Đoạn văn -> Dòng -> Câu -> Từ để giữ ngữ cảnh pháp lý
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800, chunk_overlap=100, separators=["\n\n", "\n", ". ", " ", ""]
+        chunk_size=800, chunk_overlap=150, separators=["\n\n", "\n", ". ", " ", ""]
     )
     chunks = text_splitter.split_documents(documents)
-    print(f"✅ Đã tạo {len(chunks)} đoạn văn bản.")
 
-    # 3. Tạo Vector Database (ChromaDB)
+    # 3. Tạo Vector Database (ChromaDB) với Gemini Embeddings
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     Chroma.from_documents(
-        documents=chunks, embedding=embeddings, persist_directory="chroma_db_luat_new"
+        documents=chunks, embedding=embeddings, persist_directory="vector_db_luat"
     )
-    print("✅ Dữ liệu đã được lưu vào ChromaDB.")
+    print(f"Thành công! Đã nạp {len(chunks)} đoạn văn bản từ PDF/Word vào Database.")
 
 
 if __name__ == "__main__":
